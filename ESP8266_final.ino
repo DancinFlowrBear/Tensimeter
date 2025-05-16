@@ -1,15 +1,14 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 
-const char* ssid = "esp8266";       // Replace with your Wi-Fi SSID
-const char* password = "82666esp";  // Replace with your Wi-Fi password
+const char* ssid = "esp8266";       
+const char* password = "82666esp";  
+const char* serverUrl = "http://192.168.18.12/sphygdb/save_data.php";  
 
-const char* serverUrl = "http://192.168.18.12/sphygdb/save_data.php";  // Replace with your local IP and file path
-
-WiFiClient client;  // Create a WiFiClient object
+WiFiClient client;  
 
 void setup() {
-    Serial.begin(9600);   // Serial Monitor for debugging
+    Serial.begin(9600);   
 
     Serial.println("🚀 Connecting to Wi-Fi...");
     WiFi.begin(ssid, password);
@@ -27,10 +26,9 @@ void setup() {
 }
 
 void loop() {
-    if (Serial.available()) { // Check if ESP32 sent data
-        String receivedData = Serial.readStringUntil('\n');  // Read the incoming data
+    if (Serial.available()) { 
+        String receivedData = Serial.readStringUntil('\n');  
 
-        // Split the received data (e.g., "95 57 82") into individual values
         int sys, dia, bpm;
         sscanf(receivedData.c_str(), "%d %d %d", &sys, &dia, &bpm);
 
@@ -70,5 +68,5 @@ void loop() {
         }
     }
 
-    delay(1000); // Small delay for stability
+    delay(1000); 
 }
