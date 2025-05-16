@@ -3,7 +3,7 @@
 static BLEUUID serviceUUID("0000FFF0-0000-1000-8000-00805F9B34FB");  // Primary Service UUID
 static BLEUUID charUUID("0000FFF4-0000-1000-8000-00805F9B34FB");      // Characteristic UUID
 static BLEUUID descriptorUUID("00002902-0000-1000-8000-00805F9B34FB"); // Descriptor UUID (for enabling notifications)
-static BLEAddress sphygAddress("94:e3:6d:aa:6f:f3");                 // Your device's BLE address
+static BLEAddress sphygAddress("94:e3:6d:aa:6f:f3");                 
 
 static BLEClient* pClient;
 static BLERemoteCharacteristic* pRemoteCharacteristic;
@@ -11,7 +11,7 @@ static boolean isConnected = false;
 
 // 🔹 Callback function when new data is received
 static void notifyCallback(BLERemoteCharacteristic* pBLERemoteCharacteristic, uint8_t* pData, size_t length, bool isNotify) {
-    // Only process if data starts with AA 0D
+    
     if (pData[0] == 0xAA && pData[1] == 0x0D) {
         // Debugging the bytes involved in the systolic, diastolic, and BPM values
         int sys = pData[5];  // systolic value in decimal
@@ -23,7 +23,7 @@ static void notifyCallback(BLERemoteCharacteristic* pBLERemoteCharacteristic, ui
         snprintf(dataToSend, sizeof(dataToSend), "%d %d %d", sys, dia, bpm);
         Serial1.println(dataToSend);  // Send the parsed data to ESP8266
 
-        // Debugging output for serial monitor (not sent to ESP8266)
+        // Debugging output for serial monitor 
         Serial.print("Parsed data sent to ESP8266: ");
         Serial.print(sys);
         Serial.print(" ");
@@ -86,7 +86,7 @@ void setup() {
     }
 
     // Start communication with ESP8266 over UART
-    Serial1.begin(9600, SERIAL_8N1, 16, 17);  // Use appropriate RX/TX pins for ESP32-to-ESP8266
+    Serial1.begin(9600, SERIAL_8N1, 16, 17);
 }
 
 void loop() {
@@ -95,6 +95,6 @@ void loop() {
         connectToDevice(sphygAddress);
     }
 
-    delay(5000);  // Delay to avoid constant checking
+    delay(5000); 
 }
 
